@@ -31,11 +31,9 @@ namespace minig {
             glm::mat4 projection = glm::perspective(glm::radians(45.0f), aspect_ratio, 0.1f, 100.0f);
             
             shader_program_.use();
-
             shader_program_.send_float_mat4_data(std::string("projection"), projection);
             shader_program_.send_float_mat4_data(std::string("view"), view);
             shader_program_.send_float_mat4_data(std::string("model"), model);
-
 
             glBindVertexArray(attribute_array_);
             glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
