@@ -90,11 +90,14 @@ namespace minig {
             GLuint shader_program = glCreateProgram();
 
             std::string vertex_source = "#version 430 core\n"
-            "in vec3 position;\n"
-            "in vec4 color;\n"
+            "layout(location = 0) in vec3 position;\n"
+            "layout(location = 1) in vec4 color;\n"
+            "uniform mat4 projection;\n"
+            "uniform mat4 view;\n"
+            "uniform mat4 model;\n"
             "out vec4 mid_color;\n"
             "void main() {\n"
-            "    gl_Position = vec4(position, 1.0);\n"
+            "    gl_Position = projection * view * model * vec4(position, 1.0);\n"
             "    mid_color = color;\n"
             "}\n";
 
