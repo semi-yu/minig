@@ -1,3 +1,6 @@
+#ifndef _APPLICATION_WINDOW_CPP__
+#define _APPLICATION_WINDOW_CPP__
+
 #include <string>
 #include <vector>
 #include <memory>
@@ -91,3 +94,5 @@ namespace minig {
 
     }; 
 }
+
+#endif
