@@ -45,7 +45,7 @@ namespace minig {
             }
         }
 
-        void register_enginable(std::unique_ptr<IEnginable>& enginable) {
+        void register_enginable(std::unique_ptr<IEnginable> enginable) {
             enginables.push_back(std::move(enginable)); 
         }
 
