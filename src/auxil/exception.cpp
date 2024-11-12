@@ -1,5 +1,7 @@
 #include <string>
 
+#include <fmt/core.h>
+
 namespace minig::auxil {
     class BaseException : public std::exception {
         std::string message_; 
@@ -20,4 +22,18 @@ namespace minig::auxil {
     public:
         GladInitFailure() : BaseException("GLAD could not be initialized.") {}
     };
+
+    class ShaderCompilationFailure : public BaseException {
+    public:
+        ShaderCompilationFailure(
+            std::string& shader_name,
+            std::string& log
+        ): BaseException(fmt::format("[{} shader compilation error] {}", shader_name, log)) {}
+    };
+
+    class ShaderProgramLinkFailure : public BaseException { 
+        ShaderProgramLinkFailure(
+            std::string& log
+        ): BaseException(fmt::format("[shader Program link error] {}", log)) {}
+    }; 
 }
