@@ -18,12 +18,12 @@ namespace minig::auxil {
 
     class GlfwInitFailure : public BaseException{
     public:
-        GlfwInitFailure(): BaseException("GLFW could not be initialized.") {}
+        GlfwInitFailure(): BaseException("[GLFW error] GLFW could not be initialized.") {}
     }; 
 
     class GladInitFailure : public BaseException {
     public:
-        GladInitFailure() : BaseException("GLAD could not be initialized.") {}
+        GladInitFailure() : BaseException("[GLAD error] GLAD could not be initialized.") {}
     };
 
     class ShaderCompilationFailure : public BaseException {
@@ -38,7 +38,7 @@ namespace minig::auxil {
     public:
         ShaderProgramLinkFailure(
             const std::string& log
-        ): BaseException(fmt::format("[shader Program link error] {}", log)) {}
+        ): BaseException(fmt::format("[Program link error] {}", log)) {}
     }; 
 }
 
