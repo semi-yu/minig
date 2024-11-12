@@ -26,14 +26,15 @@ namespace minig::auxil {
     class ShaderCompilationFailure : public BaseException {
     public:
         ShaderCompilationFailure(
-            std::string& shader_name,
-            std::string& log
+            const std::string& shader_name,
+            const std::string& log
         ): BaseException(fmt::format("[{} shader compilation error] {}", shader_name, log)) {}
     };
 
     class ShaderProgramLinkFailure : public BaseException { 
+    public:
         ShaderProgramLinkFailure(
-            std::string& log
+            const std::string& log
         ): BaseException(fmt::format("[shader Program link error] {}", log)) {}
     }; 
 }
