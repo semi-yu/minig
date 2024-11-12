@@ -28,7 +28,9 @@ target_include_directories(stb PRIVATE "external/stb")
 set(SOURCES
     src/main.cpp
     src/core/application_window.cpp
+    src/core/graphical.cpp
     src/auxil/exception.cpp
+    src/interface/ienginable.cpp
 )
 
 add_executable(minig ${SOURCES})
