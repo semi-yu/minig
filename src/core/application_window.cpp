@@ -1,4 +1,6 @@
 #include <string>
+#include <vector>
+#include <memory>
 
 #include <GLAD/glad.h>
 #include <GLFW/glfw3.h>
@@ -6,6 +8,7 @@
 #include <fmt/core.h>
 
 #include "../auxil/exception.cpp"
+#include "../interface/IEnginable.cpp"
 
 namespace minig {
     class ApplicationWindow {
@@ -13,6 +16,7 @@ namespace minig {
         int window_width_, window_height_;
 
         GLFWwindow* window_;
+        std::vector<std::unique_ptr<IEnginable>> enginables;
     
     public:
         ApplicationWindow(
@@ -28,17 +32,34 @@ namespace minig {
 
         void application_loop() {
             while(__keep_loop()) {
-                fmt::print("{}\n", "Hello.");\
+                __pre_process();
+
+                for (auto& engine: enginables) {
+                    engine->run();
+                }
                 
-                glfwSwapBuffers(window_);
-                glfwPollEvents();
+                __post_process();
             }
+        }
+
+        void register_enginable(std::unique_ptr<IEnginable>& enginable) {
+            enginables.push_back(std::move(enginable)); 
         }
 
     protected:
         bool __keep_loop() {
             return !glfwWindowShouldClose(window_);
         }
+
+        void __pre_process() {
+            // to be done...
+        }
+
+        void __post_process() {
+            glfwSwapBuffers(window_);
+            glfwPollEvents();
+        }
+
     private:
         void __init_opengl_context() {
             glfwInit();
