@@ -1,0 +1,38 @@
+cmake_minimum_required(VERSION 3.16)
+
+project(minig)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE Debug)
+endif()
+
+find_package(OpenGL REQUIRED)
+
+set(GLFW_DIR "${CMAKE_SOURCE_DIR}/external/glfw")
+add_subdirectory(${GLFW_DIR})
+
+set(GLM_DIR "${CMAKE_SOURCE_DIR}/external/glm")
+add_subdirectory(${GLM_DIR})
+
+set(FMT_DIR "${CMAKE_SOURCE_DIR}/external/fmt")
+add_subdirectory(${FMT_DIR})
+
+add_library(glad "external/glad/src/glad.c")
+target_include_directories(glad PRIVATE "external/glad/include")
+
+add_library(stb "external/stb/stb_vorbis.c")
+target_include_directories(stb PRIVATE "external/stb")
+
+set(SOURCES
+    src/main.cpp
+    src/core/application_window.cpp
+    src/auxil/exception.cpp
+)
+
+add_executable(minig ${SOURCES})
+
+target_link_libraries(minig PRIVATE stb fmt glfw glad glm OpenGL::GL)
+
+target_include_directories(minig PRIVATE include ${GLFW_DIR}/include "external/glad/include" "external/stb")
