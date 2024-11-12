@@ -1,3 +1,6 @@
+#ifndef __AUXIL_EXCEPTION_CPP__
+#define __AUXIL_EXCEPTION_CPP__
+
 #include <string>
 
 #include <fmt/core.h>
@@ -38,3 +41,5 @@ namespace minig::auxil {
         ): BaseException(fmt::format("[shader Program link error] {}", log)) {}
     }; 
 }
+
+#endif
