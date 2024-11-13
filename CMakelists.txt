@@ -29,6 +29,7 @@ set(SOURCES
     src/main.cpp
     src/core/application_window.cpp
     src/core/graphical.cpp
+    src/core/colored_shape.cpp
     src/auxil/exception.cpp
     src/interface/ienginable.cpp
 )
