@@ -40,6 +40,13 @@ namespace minig::auxil {
             const std::string& log
         ): BaseException(fmt::format("[Program link error] {}", log)) {}
     }; 
+
+    class TextureLoadFailure : public BaseException {
+    public:
+        TextureLoadFailure(
+            const std::string& path
+        ): BaseException(fmt::format("[Texture load error] The texture at {} could not be configured.", path)) {}
+    };
 }
 
 #endif
