@@ -34,6 +34,10 @@ namespace minig {
         }
 
         void application_loop() {
+            for (auto& engine: enginables) {
+                engine->pre_run();
+            }
+
             while(__keep_loop()) {
                 __pre_process();
 
