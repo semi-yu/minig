@@ -22,8 +22,7 @@ add_subdirectory(${FMT_DIR})
 add_library(glad "external/glad/src/glad.c")
 target_include_directories(glad PRIVATE "external/glad/include")
 
-add_library(stb "external/stb/stb_vorbis.c")
-target_include_directories(stb PRIVATE "external/stb")
+include_directories("${CMAKE_SOURCE_DIR}/external/stb")
 
 set(SOURCES
     src/main.cpp
@@ -37,6 +36,6 @@ set(SOURCES
 
 add_executable(minig ${SOURCES})
 
-target_link_libraries(minig PRIVATE stb fmt glfw glad glm OpenGL::GL)
+target_link_libraries(minig PRIVATE fmt glfw glad glm OpenGL::GL)
 
 target_include_directories(minig PRIVATE include ${GLFW_DIR}/include "external/glad/include" "external/stb")
