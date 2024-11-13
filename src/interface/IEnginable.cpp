@@ -4,6 +4,7 @@
 namespace minig {
     class IEnginable {
     public:
+        virtual void pre_run() = 0;
         virtual void run() = 0;
     }; 
 }
