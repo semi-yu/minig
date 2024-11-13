@@ -4,6 +4,7 @@
 #include "./application_window.cpp"
 #include "./shader_program.cpp"
 #include "./colored_shape.cpp"
+#include "./textured_shape.cpp"
 #include "../interface/IEnginable.cpp"
 #include "../auxil/exception.cpp"
 
@@ -12,12 +13,20 @@ namespace minig {
         minig::ShaderProgram shader_program_;
         GLuint attribute_array_, vertex_buffer_, index_buffer_;
 
-        std::vector<minig::ColoredShape> drawables;
+        std::vector<minig::TexturedShape> drawables;
     
     public:
         Graphical(
             minig::ShaderProgram& shader_program
         ): shader_program_(shader_program) {}
+
+        void pre_run() {
+            shader_program_.use();
+
+            for (auto& drawable: drawables) {
+                drawable.pre_draw_call(shader_program_);
+            }
+        }
 
         void run() override {
             glViewport(0, 0, 800, 600);
@@ -44,13 +53,13 @@ namespace minig {
         }
 
         void configure_drawable() {
-            float edge = 0.4;
+            float edge = 0.75;
             float ang = 3.14/6;
             auto vertices = std::vector<GLfloat>({
-                -edge, -edge, 0.0, 1.0, 0.5, 0.2, 0.0, 
-                -edge,  edge, 0.0, 1.0, 0.5, 0.2, 0.0, 
-                 edge, -edge, 0.0, 1.0, 0.5, 0.2, 0.0,
-                 edge,  edge, 0.0, 1.0, 0.5, 0.2, 0.0
+                -edge, -edge, 0.0,      1.0, 1.0, 1.0, 1.0,     0.0, 0.0,
+                -edge,  edge, 0.0,      1.0, 1.0, 1.0, 1.0,     0.0, 1.0,
+                 edge, -edge, 0.0,      1.0, 1.0, 1.0, 1.0,     1.0, 0.0,
+                 edge,  edge, 0.0,      1.0, 1.0, 1.0, 1.0,     1.0, 1.0
             });
 
             auto indices = std::vector<GLuint>({
@@ -58,10 +67,7 @@ namespace minig {
                 1, 2, 3
             }); 
 
-            auto rectangle = minig::ColoredShape(
-                vertices,
-                indices
-            ); 
+            auto rectangle = minig::TexturedShape(vertices, indices);
 
             drawables.push_back(rectangle);
         }
