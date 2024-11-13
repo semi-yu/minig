@@ -7,12 +7,11 @@
 #include "../interface/IEnginable.cpp"
 #include "../auxil/exception.cpp"
 
-
 namespace minig {
     class Graphical : public IEnginable {
         minig::ShaderProgram shader_program_;
         GLuint attribute_array_, vertex_buffer_, index_buffer_;
-        
+
         std::vector<minig::ColoredShape> drawables;
     
     public:
@@ -59,12 +58,12 @@ namespace minig {
                 1, 2, 3
             }); 
 
-            auto triangle = minig::ColoredShape(
+            auto rectangle = minig::ColoredShape(
                 vertices,
                 indices
             ); 
 
-            drawables.push_back(triangle);
+            drawables.push_back(rectangle);
         }
     };
 }
