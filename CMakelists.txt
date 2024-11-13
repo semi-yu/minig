@@ -30,6 +30,7 @@ set(SOURCES
     src/core/application_window.cpp
     src/core/graphical.cpp
     src/core/colored_shape.cpp
+    src/core/textured_shape.cpp
     src/auxil/exception.cpp
     src/interface/ienginable.cpp
 )
