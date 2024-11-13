@@ -34,7 +34,6 @@ namespace minig {
         void unbind() { glBindVertexArray(0); }
     
     protected:
-
         void __configure_drawable_context(
             std::vector<GLfloat>& vertices,
             std::vector<GLuint>& indices
@@ -70,7 +69,7 @@ namespace minig {
             glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 7 * sizeof(GLfloat), (void*)0);
             glEnableVertexAttribArray(0);
 
-            glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 7 * sizeof(GLfloat), (void*)(3*sizeof(GLfloat)));
+            glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 7 * sizeof(GLfloat), (void*)(3 * sizeof(GLfloat)));
             glEnableVertexAttribArray(1);
         }
     }; 
