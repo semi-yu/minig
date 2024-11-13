@@ -20,21 +20,32 @@ namespace minig {
             "#version 430 core\n"
             "layout(location = 0) in vec3 position;\n"
             "layout(location = 1) in vec4 color;\n"
+            "layout(location = 2) in vec2 texture_coord;\n"
             "uniform mat4 projection;\n"
             "uniform mat4 view;\n"
             "uniform mat4 model;\n"
             "out vec4 mid_color;\n"
+            "out vec2 mid_texture_coord;\n"
             "void main() {\n"
-            "    gl_Position = projection * view * model * vec4(position, 1.0);\n"
-            "    mid_color = color;\n"
-            "}\n",
+            "   gl_Position = projection * view * model * vec4(position, 1.0);\n"
+            "   mid_color = color;\n"
+            "   mid_texture_coord = vec2(texture_coord.x, texture_coord.y);\n"
+            "}",
 
             "#version 430 core\n"
             "in vec4 mid_color;\n"
+            "in vec2 mid_texture_coord;\n"
+            "uniform sampler2D texture_sample;\n"
+            "uniform uint shape_type;"
             "out vec4 fragment_color;\n"
             "void main() {\n"
-            "    fragment_color = mid_color;\n"
-            "}\n"
+            "   if (shape_type == 0) {\n"
+            "       fragment_color = mid_color;\n"
+            "   }\n"
+            "   else if (shape_type == 1) {\n"
+            "       fragment_color = texture(texture_sample, mid_texture_coord);\n"
+            "   }\n"
+            "}"
         };
 
         std::array<GLuint, 2> shader_types_ = { 
