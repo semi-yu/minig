@@ -24,6 +24,7 @@ namespace minig {
 
         void draw_call(minig::ShaderProgram& shader_program) {
             bind();
+            shader_program.send_integer_scalar_data(std::string("shape_type"), 0);
             glDrawElements(GL_TRIANGLES, n_indices_, GL_UNSIGNED_INT, 0);
             unbind();
         }
