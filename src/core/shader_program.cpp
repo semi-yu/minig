@@ -1,7 +1,13 @@
+#ifndef __SHADER_PROGRAM_CPP__
+#define __SHADER_PROGRAM_CPP__
+
+#include <string>
 #include <vector>
 
 #include <GLAD/glad.h>
 #include <GLM/ext.hpp>
+
+#include "../auxil/exception.cpp"
 
 namespace minig {
     class ShaderProgram {
@@ -114,3 +120,5 @@ namespace minig {
         }
     }; 
 }
+
+#endif
