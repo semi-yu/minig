@@ -65,8 +65,8 @@ namespace minig {
 
         void use() { glUseProgram(shader_program_name_); }
 
-        void send_integer_scalar_data(const std::string& name, GLuint value) {
-            glUniform1i(
+        void send_unsigned_integer_scalar_data(const std::string& name, GLuint value) {
+            glUniform1ui(
                 glGetUniformLocation(shader_program_name_, name.c_str()), 
                 value
             );
