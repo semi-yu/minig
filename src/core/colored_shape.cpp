@@ -23,9 +23,10 @@ namespace minig {
         }
 
         void draw_call(minig::ShaderProgram& shader_program) {
+            shader_program.send_unsigned_integer_scalar_data(std::string("shape_type"), 0);
+            
             bind();
-            shader_program.send_integer_scalar_data(std::string("shape_type"), 0);
-            glDrawElements(GL_TRIANGLES, n_indices_, GL_UNSIGNED_INT, 0);
+                glDrawElements(GL_TRIANGLES, n_indices_, GL_UNSIGNED_INT, 0);
             unbind();
         }
 
@@ -68,11 +69,11 @@ namespace minig {
         }
 
         void __configure_encoding() {
-            glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 7 * sizeof(GLfloat), (void*)0);
             glEnableVertexAttribArray(0);
+            glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 7 * sizeof(GLfloat), (void*)0);
 
-            glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 7 * sizeof(GLfloat), (void*)(3 * sizeof(GLfloat)));
             glEnableVertexAttribArray(1);
+            glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 7 * sizeof(GLfloat), (void*)(3 * sizeof(GLfloat)));
         }
     }; 
 }
