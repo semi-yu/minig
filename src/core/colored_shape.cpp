@@ -12,7 +12,6 @@
 namespace minig {
     class ColoredShape {
         GLuint attribute_array_, vertex_buffer_, index_buffer_;
-        GLuint n_indices_;
     
     public:
         ColoredShape(
@@ -34,6 +33,8 @@ namespace minig {
         void unbind() { glBindVertexArray(0); }
     
     protected:
+        GLuint n_indices_;
+        
         void __configure_drawable_context(
             std::vector<GLfloat>& vertices,
             std::vector<GLuint>& indices
