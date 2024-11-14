@@ -1,10 +1,15 @@
+#include <vector>
+#include <memory>
+
 #include <GLAD/glad.h>
 #include <GLM/ext.hpp>
 
 #include "./application_window.cpp"
 #include "./shader_program.cpp"
-#include "./colored_shape.cpp"
-#include "./textured_shape.cpp"
+#include "../interface/ishape.cpp"
+#include "./textured.cpp"
+#include "./colored.cpp"
+
 #include "../interface/IEnginable.cpp"
 #include "../auxil/exception.cpp"
 
@@ -13,8 +18,8 @@ namespace minig {
         minig::ShaderProgram shader_program_;
         GLuint attribute_array_, vertex_buffer_, index_buffer_;
 
-        std::vector<minig::TexturedShape> drawables;
-    
+        std::vector<std::unique_ptr<minig::IShape>> drawables;
+        
     public:
         Graphical(
             minig::ShaderProgram& shader_program
@@ -24,7 +29,7 @@ namespace minig {
             shader_program_.use();
 
             for (auto& drawable: drawables) {
-                drawable.pre_draw_call(shader_program_);
+                drawable->pre_draw_call(shader_program_);
             }
         }
 
@@ -33,7 +38,7 @@ namespace minig {
 
             for (auto& drawable: drawables) {
                 draw_preprocess();
-                drawable.draw_call(shader_program_);
+                drawable->draw_call(shader_program_);
             }
         }
 
@@ -52,24 +57,8 @@ namespace minig {
             shader_program_.send_float_mat4_data(std::string("model"), model);
         }
 
-        void configure_drawable() {
-            float edge = 0.75;
-            float ang = 3.14/6;
-            auto vertices = std::vector<GLfloat>({
-                -edge, -edge, 0.0,      1.0, 1.0, 1.0, 1.0,     0.0, 0.0,
-                -edge,  edge, 0.0,      1.0, 1.0, 1.0, 1.0,     0.0, 1.0,
-                 edge, -edge, 0.0,      1.0, 1.0, 1.0, 1.0,     1.0, 0.0,
-                 edge,  edge, 0.0,      1.0, 1.0, 1.0, 1.0,     1.0, 1.0
-            });
-
-            auto indices = std::vector<GLuint>({
-                0, 1, 2,
-                1, 2, 3
-            }); 
-
-            auto rectangle = minig::TexturedShape(vertices, indices);
-
-            drawables.push_back(rectangle);
+        void register_drawable(std::unique_ptr<minig::Textured> drawable) {
+            drawables.push_back(std::move(drawable));
         }
     };
 }
