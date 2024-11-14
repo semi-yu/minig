@@ -13,6 +13,8 @@
 #include "../auxil/exception.cpp"
 #include "../interface/IEnginable.cpp"
 
+#include "../control/application_window_resize_callback.cpp"
+
 namespace minig {
     class ApplicationWindow {
         std::string window_title_;
@@ -51,6 +53,11 @@ namespace minig {
 
         void register_enginable(std::unique_ptr<IEnginable> enginable) {
             enginables.push_back(std::move(enginable)); 
+        }
+
+        void register_callback(minig::ApplicationWindowResizeCallback callback) {
+            callback.set(window_);
+            callback.register_callback(window_);
         }
 
     protected:
