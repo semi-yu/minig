@@ -45,6 +45,9 @@ namespace minig {
             "   else if (shape_type == 1) {\n"
             "       fragment_color = texture(texture_sample, mid_texture_coord);\n"
             "   }\n"
+            "   else if (shape_type == 2) {\n"
+            "       fragment_color = texture(texture_sample, mid_texture_coord) * mid_color;\n"
+            "   }\n"
             "}"
         };
 
