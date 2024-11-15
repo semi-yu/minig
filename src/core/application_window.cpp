@@ -12,8 +12,7 @@
 
 #include "../auxil/exception.cpp"
 #include "../interface/IEnginable.cpp"
-
-#include "../control/application_window_resize_callback.cpp"
+#include "../control/event_handler.cpp"
 
 namespace minig {
     class ApplicationWindow {
@@ -22,6 +21,8 @@ namespace minig {
 
         GLFWwindow* window_;
         std::vector<std::unique_ptr<IEnginable>> enginables;
+
+        std::unique_ptr<minig::EventHandler> event_handler_;
     
     public:
         ApplicationWindow(
@@ -55,9 +56,9 @@ namespace minig {
             enginables.push_back(std::move(enginable)); 
         }
 
-        void register_callback(minig::ApplicationWindowResizeCallback callback) {
-            callback.set(window_);
-            callback.register_callback(window_);
+        void register_event_handler(std::unique_ptr<minig::EventHandler> event_handler) {
+            event_handler_ = std::move(event_handler);
+            event_handler_->initialize(window_);
         }
 
     protected:
