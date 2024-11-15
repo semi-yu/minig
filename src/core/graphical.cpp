@@ -6,10 +6,10 @@
 
 #include "./application_window.cpp"
 #include "./shader_program.cpp"
-#include "../interface/ishape.cpp"
 #include "./textured.cpp"
 #include "./colored.cpp"
 
+#include "../interface/ishape.cpp"
 #include "../interface/IEnginable.cpp"
 #include "../auxil/exception.cpp"
 
