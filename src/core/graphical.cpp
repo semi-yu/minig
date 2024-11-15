@@ -50,9 +50,9 @@ namespace minig {
             glm::mat4 projection = glm::perspective(glm::radians(45.0f), aspect_ratio, 0.1f, 100.0f);
             
             shader_program_.use();
-            shader_program_.send_float_mat4_data(std::string("projection"), projection);
-            shader_program_.send_float_mat4_data(std::string("view"), view);
-            shader_program_.send_float_mat4_data(std::string("model"), model);
+            shader_program_.send_projection_matrix(projection);
+            shader_program_.send_view_matrix(view);
+            shader_program_.send_model_matrix(model);
         }
 
         void register_drawable(std::unique_ptr<minig::Textured> drawable) {
