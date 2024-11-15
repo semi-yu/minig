@@ -34,8 +34,6 @@ namespace minig {
         }
 
         void run() override {
-            glViewport(0, 0, 800, 600);
-
             for (auto& drawable: drawables) {
                 draw_preprocess();
                 drawable->draw_call(shader_program_);
