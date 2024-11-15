@@ -25,7 +25,7 @@ namespace minig {
             minig::ShaderProgram& shader_program
         ): shader_program_(shader_program) {}
 
-        void pre_run() {
+        void pre_run() override {
             shader_program_.use();
 
             for (auto& drawable: drawables) {
