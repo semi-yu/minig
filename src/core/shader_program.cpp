@@ -21,13 +21,17 @@ namespace minig {
             "layout(location = 0) in vec3 position;\n"
             "layout(location = 1) in vec4 color;\n"
             "layout(location = 2) in vec2 texture_coord;\n"
+            "uniform float time;\n"
+            "uniform mat4 scalation;\n"
+            "uniform mat4 rotation;\n"
+            "uniform mat4 translation;\n"
             "uniform mat4 projection;\n"
             "uniform mat4 view;\n"
             "uniform mat4 model;\n"
             "out vec4 mid_color;\n"
             "out vec2 mid_texture_coord;\n"
             "void main() {\n"
-            "   gl_Position = projection * view * model * vec4(position, 1.0);\n"
+            "   gl_Position = projection * view * scalation * rotation * translation * vec4(position, 1.0);\n"
             "   mid_color = color;\n"
             "   mid_texture_coord = vec2(texture_coord.x, texture_coord.y);\n"
             "}",
@@ -35,6 +39,7 @@ namespace minig {
             "#version 430 core\n"
             "in vec4 mid_color;\n"
             "in vec2 mid_texture_coord;\n"
+            "uniform float time;\n"
             "uniform sampler2D texture_sample;\n"
             "uniform uint shape_type;"
             "out vec4 fragment_color;\n"
@@ -79,6 +84,55 @@ namespace minig {
             glUniformMatrix4fv(
                 glGetUniformLocation(shader_program_name_, name.c_str()), 
                 1, GL_FALSE, glm::value_ptr(value)
+            );
+        }
+
+        void send_projection_matrix(glm::mat4& matrix) {
+            glUniformMatrix4fv(
+                glGetUniformLocation(shader_program_name_, "projection"),
+                1, GL_FALSE, glm::value_ptr(matrix)
+            );
+        }
+
+        void send_view_matrix(glm::mat4& matrix) {
+            glUniformMatrix4fv(
+                glGetUniformLocation(shader_program_name_, "view"),
+                1, GL_FALSE, glm::value_ptr(matrix)
+            );
+        }
+
+        void send_model_matrix(glm::mat4& matrix) {
+            glUniformMatrix4fv(
+                glGetUniformLocation(shader_program_name_, "model"),
+                1, GL_FALSE, glm::value_ptr(matrix)
+            );
+        }
+
+        void send_time(GLfloat time) {
+            glUniform1f(
+                glGetUniformLocation(shader_program_name_, "time"),
+                time
+            );
+        }
+
+        void send_translation_matrix(glm::mat4& matrix) {
+            glUniformMatrix4fv(
+                glGetUniformLocation(shader_program_name_, "translation"),
+                1, GL_FALSE, glm::value_ptr(matrix)
+            );
+        }
+
+        void send_rotation_matrix(glm::mat4& matrix) {
+            glUniformMatrix4fv(
+                glGetUniformLocation(shader_program_name_, "rotation"),
+                1, GL_FALSE, glm::value_ptr(matrix)
+            );
+        }
+
+        void send_scalation_matrix(glm::mat4& matrix) {
+            glUniformMatrix4fv(
+                glGetUniformLocation(shader_program_name_, "scalation"),
+                1, GL_FALSE, glm::value_ptr(matrix)
             );
         }
 
