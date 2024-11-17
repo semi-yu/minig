@@ -39,11 +39,13 @@ namespace minig {
 
             for (auto& drawable: drawables) {
                 draw_preprocess();
+                drawable->set_uniform_variables();
                 drawable->draw_call(shader_program_);
             }
         }
 
         void draw_preprocess() {
+            shader_program_.use();
             glm::mat4 view = glm::lookAt(glm::vec3(0.0f, 0.0f, 3.0f),
                              glm::vec3(0.0f, 0.0f, 0.0f),
                              glm::vec3(0.0f, 1.0f, 0.0f)); 
@@ -52,10 +54,8 @@ namespace minig {
             float aspect_ratio = static_cast<float>(800) / static_cast<float>(600);
             glm::mat4 projection = glm::perspective(glm::radians(45.0f), aspect_ratio, 0.1f, 100.0f);
             
-            shader_program_.use();
             shader_program_.send_projection_matrix(projection);
             shader_program_.send_view_matrix(view);
-            shader_program_.send_model_matrix(model);
         }
 
         void register_drawable(std::unique_ptr<minig::Textured> drawable) {
