@@ -47,13 +47,15 @@ namespace minig {
         }
     };
 
-    class TestKeyboardEvent : public KeyboardButtonEvent {
+    class AButtonPressKeyboardEventListener : public KeyboardButtonEventListener {
         bool trigger_condition(int key, int scancode, int action, int mods) override {
             return key == GLFW_KEY_A && action == GLFW_PRESS;
         }
+    };
 
-        void action() {
-            fmt::print(bg(fmt::color::dodger_blue), "[KEYBOARD] A button pressed\n");
+    class DButtonPressKeyboardEventListener : public KeyboardButtonEventListener {
+        bool trigger_condition(int key, int scancode, int action, int mods) override {
+            return key == GLFW_KEY_D && action == GLFW_PRESS;
         }
     };
 
@@ -71,9 +73,9 @@ namespace minig {
                     event->action();
             }
         }
-        
-        void register_event(std::unique_ptr<KeyboardButtonEvent> event) {
-            events_.push_back(std::move(event));
+
+        void register_event_listener(std::unique_ptr<KeyboardButtonEventListener> listener) {
+            event_listeners_.push_back(std::move(listener));
         }
     };
 }
