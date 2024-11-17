@@ -1,8 +1,6 @@
 #ifndef _APPLICATION_WINDOw_RESIZE_CALLBACK_CPP__
 #define _APPLICATION_WINDOw_RESIZE_CALLBACK_CPP__
 
-#include <fmt/core.h>
-
 #include <vector>
 #include <memory>
 
