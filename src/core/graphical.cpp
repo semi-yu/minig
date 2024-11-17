@@ -6,8 +6,7 @@
 
 #include "./application_window.cpp"
 #include "./shader_program.cpp"
-#include "./textured.cpp"
-#include "./colored.cpp"
+#include "./movable.cpp"
 
 #include "../interface/ishape.cpp"
 #include "../interface/IEnginable.cpp"
@@ -16,9 +15,8 @@
 namespace minig {
     class Graphical : public IEnginable {
         minig::ShaderProgram shader_program_;
-        GLuint attribute_array_, vertex_buffer_, index_buffer_;
 
-        std::vector<std::unique_ptr<minig::IShape>> drawables;
+        std::vector<std::shared_ptr<minig::Movable>> drawables;
         
     public:
         Graphical(
@@ -58,7 +56,7 @@ namespace minig {
             shader_program_.send_view_matrix(view);
         }
 
-        void register_drawable(std::unique_ptr<minig::Textured> drawable) {
+        void register_drawable(std::shared_ptr<minig::Movable> drawable) {
             drawables.push_back(std::move(drawable));
         }
     };
