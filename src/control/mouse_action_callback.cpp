@@ -19,7 +19,7 @@ namespace minig {
     class MouseButtonEvent {
     public:
         virtual bool trigger_condition(int button, int action, int mods) = 0;
-        virtual void action() = 0;
+        virtual void perform() = 0;
     };
 
     class TestMouseEvent : public MouseButtonEvent {
@@ -27,7 +27,7 @@ namespace minig {
             return button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS;
         }
 
-        void action() {
+        void perform() {
             fmt::print(bg(fmt::color::dodger_blue), "[MOUSE] right button pressed\n");
         }
     };
@@ -43,7 +43,7 @@ namespace minig {
         void callback(GLFWwindow* window, int button, int action, int mods) {
             for (auto& event: events_) {
                 if (event->trigger_condition(button, action, mods))
-                    event->action();
+                    event->perform();
             }
         }
 

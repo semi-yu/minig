@@ -8,6 +8,12 @@
 #include <fmt/color.h>
 #include <GLFW/glfw3.h>
 
+#include "../interface/isubscribable.cpp"
+#include "../interface/input_event.cpp"
+
+#include "../interface/input_event.cpp"
+#include "./keyboard_event_list.cpp"
+
 namespace minig {
     class KeyboardButtonEvent {
         public:
