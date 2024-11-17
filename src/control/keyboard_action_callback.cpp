@@ -15,10 +15,36 @@
 #include "./keyboard_event_list.cpp"
 
 namespace minig {
-    class KeyboardButtonEvent {
+    class KeyboardInputEvent : public InputEvent {
+        int button_;
+        int action_;
+
+    public:
+        KeyboardInputEvent(
+            int button,
+            int action
+        ): button_(button), action_(action) {}
+
+        int button() override { return button_; }
+
+        int action() override { return action_; }
+    };
+
+    class KeyboardButtonEventListener {
+        std::vector<std::shared_ptr<ISubscribable>> subscribers_;
+
         public:
         virtual bool trigger_condition(int key, int scancode, int action, int mods) = 0;
-        virtual void action() = 0;
+
+        void register_subscriber(std::shared_ptr<ISubscribable> subscriber) {
+            subscribers_.push_back(subscriber);
+        }
+
+        void perform(std::unique_ptr<minig::KeyboardInputEvent> event) {
+            for (auto& subscriber: subscribers_) {
+                subscriber->notice(std::move(event));
+            }
+        }
     };
 
     class TestKeyboardEvent : public KeyboardButtonEvent {
