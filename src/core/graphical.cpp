@@ -34,6 +34,9 @@ namespace minig {
         }
 
         void run() override {
+            glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+            glClear(GL_COLOR_BUFFER_BIT);
+
             for (auto& drawable: drawables) {
                 draw_preprocess();
                 drawable->draw_call(shader_program_);
