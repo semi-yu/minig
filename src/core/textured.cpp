@@ -11,6 +11,8 @@ namespace minig {
         GLuint texture_name_;
     
     public:
+        Textured() {}
+        
         Textured(
             std::vector<GLfloat>& vertices,
             std::vector<GLuint>& indices,

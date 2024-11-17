@@ -12,7 +12,6 @@
 
 #include "../interface/input_event.cpp"
 #include "../control/keyboard_action_callback.cpp"
-#include "../control/keyboard_event_list.cpp"
 
 namespace minig {
     class Movable : public minig::Textured, public minig::ISubscribable {
@@ -21,18 +20,20 @@ namespace minig {
 
         minig::ShaderProgram shader_program_;
     public:
+        Movable() {}
+        
         Movable(
+            minig::ShaderProgram& shader_program,
             std::vector<GLfloat>& vertices,
             std::vector<GLuint>& indices,
-            std::string& texture_path,
-            minig::ShaderProgram& shader_program
+            std::string& texture_path
         ): Textured(vertices, indices, texture_path), shader_program_(shader_program) {
             translation_ = glm::mat4(1.0);
             rotation_ = glm::mat4(1.0);
             scalation_ = glm::mat4(1.0);
         }
 
-        void notice(std::unique_ptr<InputEvent> event) {
+        void notice(std::unique_ptr<InputEvent> event) override {
             shader_program_.use();
             
             auto pressed = event->button();

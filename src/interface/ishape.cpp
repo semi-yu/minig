@@ -12,6 +12,8 @@ namespace minig {
         GLuint shape_type_;
 
     public:
+        IShape() {}
+        
         IShape(GLuint shape_type): shape_type_(shape_type) {}
 
         GLuint attribute_array() { return attribute_array_; }
