@@ -44,10 +44,10 @@ namespace minig {
 
         void draw_preprocess() {
             shader_program_.use();
+
             glm::mat4 view = glm::lookAt(glm::vec3(0.0f, 0.0f, 3.0f),
                              glm::vec3(0.0f, 0.0f, 0.0f),
-                             glm::vec3(0.0f, 1.0f, 0.0f)); 
-            glm::mat4 model = glm::mat4(1.0f);
+                             glm::vec3(0.0f, 1.0f, 0.0f));
 
             float aspect_ratio = static_cast<float>(800) / static_cast<float>(600);
             glm::mat4 projection = glm::perspective(glm::radians(45.0f), aspect_ratio, 0.1f, 100.0f);
