@@ -7,6 +7,7 @@
 #include "./application_window.cpp"
 #include "./shader_program.cpp"
 #include "./movable.cpp"
+#include "./camera.cpp"
 
 #include "../interface/ishape.cpp"
 #include "../interface/IEnginable.cpp"
@@ -15,6 +16,8 @@
 namespace minig {
     class Graphical : public IEnginable {
         minig::ShaderProgram shader_program_;
+
+        std::shared_ptr<minig::Camera> camera_;
 
         std::vector<std::shared_ptr<minig::Movable>> drawables;
         
@@ -45,19 +48,15 @@ namespace minig {
         void draw_preprocess() {
             shader_program_.use();
 
-            glm::mat4 view = glm::lookAt(glm::vec3(0.0f, 0.0f, 3.0f),
-                             glm::vec3(0.0f, 0.0f, 0.0f),
-                             glm::vec3(0.0f, 1.0f, 0.0f));
-
-            float aspect_ratio = static_cast<float>(800) / static_cast<float>(600);
-            glm::mat4 projection = glm::perspective(glm::radians(45.0f), aspect_ratio, 0.1f, 100.0f);
-            
-            shader_program_.send_projection_matrix(projection);
-            shader_program_.send_view_matrix(view);
+            camera_->set_uniform_variables();
         }
 
         void register_drawable(std::shared_ptr<minig::Movable> drawable) {
             drawables.push_back(std::move(drawable));
+        }
+
+        void register_camera(std::shared_ptr<minig::Camera> camera) {
+            camera_ = camera;
         }
     };
 }
