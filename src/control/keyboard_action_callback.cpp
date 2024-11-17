@@ -12,7 +12,6 @@
 #include "../interface/input_event.cpp"
 
 #include "../interface/input_event.cpp"
-#include "./keyboard_event_list.cpp"
 
 namespace minig {
     class KeyboardInputEvent : public InputEvent {
@@ -60,17 +59,15 @@ namespace minig {
     };
 
     class KeyboardButtonCallback {
-        std::vector<std::unique_ptr<KeyboardButtonEvent>> events_;
+        std::vector<std::unique_ptr<KeyboardButtonEventListener>> event_listeners_;
 
     public:
-        KeyboardButtonCallback() {
-            register_event(std::make_unique<TestKeyboardEvent>());
-        }
-
         void callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
-            for (auto& event: events_) {
-                if (event->trigger_condition(key, scancode, action, mods))
-                    event->action();
+            auto event = std::make_unique<minig::KeyboardInputEvent>(key, action);
+
+            for (auto& listener: event_listeners_) {
+                if (listener->trigger_condition(key, scancode, action, mods))
+                    listener->perform(std::move(event));
             }
         }
 
