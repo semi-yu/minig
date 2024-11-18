@@ -14,7 +14,7 @@
 #include "../control/keyboard_action_callback.cpp"
 
 namespace minig {
-    class Movable : public minig::Textured, public minig::ISubscribable {
+    class Movable : public minig::Textured, public minig::IKeyboardEventSubscribable, public minig::IMouseMoveEventSubscribable {
         glm::mat4 translation_, rotation_, scalation_;
         GLfloat rotational_angle_ = 0.0;
 
@@ -33,7 +33,7 @@ namespace minig {
             scalation_ = glm::mat4(1.0);
         }
 
-        void notice(std::unique_ptr<InputEvent> event) override {
+        void notice_keyboard_event(std::unique_ptr<KeyboardInputEvent> event) override {
             shader_program_.use();
             
             auto pressed = event->button();
@@ -42,6 +42,14 @@ namespace minig {
             else if (pressed == GLFW_KEY_D) { rotational_angle_ -= 0.5; }
 
             rotation_ = glm::rotate(glm::mat4(1.0), rotational_angle_, glm::vec3(0.0, 1.0, 0.0));
+        }
+
+        void notice_mouse_move_event(std::unique_ptr<MouseMoveInputEvent> event) override {
+            shader_program_.use();
+
+            auto cursor_x = event->position_x(), cursor_y = event->position_y();
+
+            fmt::print("cursor position ({}, {})\n", cursor_x, cursor_y);
         }
 
         void set_uniform_variables() {
