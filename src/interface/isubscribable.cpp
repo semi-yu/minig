@@ -7,10 +7,15 @@
 
 namespace minig {
     class ISubscribable {};
-    
+
     class IKeyboardEventSubscribable : public ISubscribable {
     public:
-        virtual void notice(std::unique_ptr<InputEvent> event) = 0;
+        virtual void notice_keyboard_event(std::unique_ptr<KeyboardInputEvent> event) = 0;
+    };
+
+    class IMouseMoveEventSubscribable : public ISubscribable {
+    public:
+        virtual void notice_mouse_move_event(std::unique_ptr<MouseMoveInputEvent> event) = 0;
     };
 }
 
