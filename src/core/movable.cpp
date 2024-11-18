@@ -34,8 +34,6 @@ namespace minig {
         }
 
         void notice_keyboard_event(std::unique_ptr<KeyboardInputEvent> event) override {
-            shader_program_.use();
-            
             auto pressed = event->button();
 
             if (pressed == GLFW_KEY_A) { rotational_angle_ += 0.5; }
@@ -45,14 +43,14 @@ namespace minig {
         }
 
         void notice_mouse_move_event(std::unique_ptr<MouseMoveInputEvent> event) override {
-            shader_program_.use();
-
             auto cursor_x = event->position_x(), cursor_y = event->position_y();
 
             fmt::print("cursor position ({}, {})\n", cursor_x, cursor_y);
         }
 
         void set_uniform_variables() {
+            shader_program_.use();
+
             shader_program_.send_translation_matrix(translation_);
             shader_program_.send_rotation_matrix(rotation_);
             shader_program_.send_scalation_matrix(scalation_);
