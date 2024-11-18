@@ -19,6 +19,7 @@ namespace minig {
         GLfloat rotational_angle_ = 0.0;
 
         minig::ShaderProgram shader_program_;
+
     public:
         Movable() {}
         
