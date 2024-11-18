@@ -28,18 +28,18 @@ namespace minig {
     };
 
     class KeyboardButtonEventListener {
-        std::vector<std::shared_ptr<ISubscribable>> subscribers_;
+        std::vector<std::shared_ptr<IKeyboardEventSubscribable>> subscribers_;
 
-        public:
+    public:
         virtual bool trigger_condition(int key, int scancode, int action, int mods) = 0;
 
-        void register_subscriber(std::shared_ptr<ISubscribable> subscriber) {
+        void register_subscriber(std::shared_ptr<IKeyboardEventSubscribable> subscriber) {
             subscribers_.push_back(subscriber);
         }
 
-        void perform(std::unique_ptr<minig::KeyboardInputEvent> event) {
+        void perform(std::unique_ptr<minig::KeyboardButtonInputEvent> event) {
             for (auto& subscriber: subscribers_) {
-                subscriber->notice(std::move(event));
+                subscriber->notice_keyboard_event(std::move(event));
             }
         }
     };
@@ -61,9 +61,9 @@ namespace minig {
 
     public:
         void callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
-            auto event = std::make_unique<minig::KeyboardInputEvent>(key, action);
-
             for (auto& listener: event_listeners_) {
+                auto event = std::make_unique<minig::KeyboardButtonInputEvent>(key, action);
+
                 if (listener->trigger_condition(key, scancode, action, mods))
                     listener->perform(std::move(event));
             }
