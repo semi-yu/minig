@@ -26,11 +26,18 @@ namespace minig {
             }
         }
     };
-    
+
     class MouseMoveCallback {
+        std::unique_ptr<minig::MouseMoveEventListener> event_listener_;
     public:
         void callback(GLFWwindow* window, double xpos, double ypos) {
-            fmt::print("mouse cursor position ({}, {})\n", xpos, ypos);
+            auto event = std::make_unique<minig::MouseMoveInputEvent>(xpos, ypos);
+
+            event_listener_->perform(std::move(event));
+        }
+
+        void register_event_listener(std::unique_ptr<minig::MouseMoveEventListener> listener) {
+            event_listener_ = std::move(listener);
         }
     };
 
