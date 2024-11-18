@@ -13,6 +13,9 @@ namespace minig {
         glm::vec3 position_, look_at_, up_;
         glm::mat4 projection_;
 
+        bool mouse_view_initialization = false;
+        double last_position_x = 400, last_position_y = 300;
+
     public:
         Camera(
             minig::ShaderProgram& shader_program,
@@ -25,17 +28,40 @@ namespace minig {
 
         void notice_keyboard_event(std::unique_ptr<KeyboardInputEvent> event) override {
             float move_multiplier = 0.5;
-            
-            shader_program_.use();
 
             auto pressed = event->button();
 
             if (pressed == GLFW_KEY_A) { 
-                position_.x += move_multiplier * 5; 
+                position_.x -= move_multiplier * 5;
             }
             else if (pressed == GLFW_KEY_D) { 
-                position_.x -= move_multiplier * 5; 
+                position_.x += move_multiplier * 5;
             }
+            else if (pressed == GLFW_KEY_W) {
+                position_.z -= move_multiplier * 2.5;
+            }
+            else if (pressed == GLFW_KEY_S) {
+                position_.z += move_multiplier * 2.5;
+            }
+        }
+
+        void notice_mouse_move_event(std::unique_ptr<MouseMoveInputEvent> event) {
+            float mouse_sensitivity = 0.01;
+            auto cursor_x = event->position_x(), cursor_y = event->position_y();
+
+            if (!mouse_view_initialization) {
+                last_position_x = cursor_x;
+                last_position_y = cursor_y;
+                mouse_view_initialization = true;
+            }
+
+            float offset_x = (cursor_x - last_position_x) * mouse_sensitivity;
+            float offset_y = (last_position_y - cursor_y) * mouse_sensitivity;
+            last_position_x = cursor_x;
+            last_position_y = cursor_y;
+
+            look_at_.x += offset_x;
+            look_at_.y += offset_y;
         }
 
         void set_uniform_variables() {
