@@ -38,8 +38,14 @@ namespace minig {
             glfwSetWindowUserPointer(window, this);
 
             if (window_resize_callback_ != nullptr) glfwSetFramebufferSizeCallback(window, window_resize_wrapper);
-            if (mouse_move_callback_ != nullptr) glfwSetCursorPosCallback(window, mouse_move_wrapper);
+
+            if (mouse_move_callback_ != nullptr) {
+                glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+                glfwSetCursorPosCallback(window, mouse_move_wrapper);
+            }
+
             if (mouse_button_callback_ != nullptr) glfwSetMouseButtonCallback(window, mouse_button_wrapper);
+
             if (keyboard_button_callback_ != nullptr) glfwSetKeyCallback(window, keyboard_button_wrapper);
         }
     
