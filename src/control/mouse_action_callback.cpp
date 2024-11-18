@@ -8,7 +8,25 @@
 #include <fmt/color.h>
 #include <GLFW/glfw3.h>
 
+#include "../interface/isubscribable.cpp"
+#include "../interface/input_event.cpp"
+
 namespace minig {
+    class MouseMoveEventListener {
+        std::vector<std::shared_ptr<IMouseMoveEventSubscribable>> subscribers_;
+
+    public:
+        void register_subscriber(std::shared_ptr<IMouseMoveEventSubscribable> subscriber) {
+            subscribers_.push_back(subscriber);
+        }
+
+        void perform(std::unique_ptr<minig::MouseMoveInputEvent> event) {
+            for (auto& subscriber: subscribers_) {
+                subscriber->notice_mouse_move_event(std::move(event));
+            }
+        }
+    };
+    
     class MouseMoveCallback {
     public:
         void callback(GLFWwindow* window, double xpos, double ypos) {
