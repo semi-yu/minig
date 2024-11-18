@@ -11,15 +11,13 @@
 #include "../interface/isubscribable.cpp"
 #include "../interface/input_event.cpp"
 
-#include "../interface/input_event.cpp"
-
 namespace minig {
-    class KeyboardInputEvent : public InputEvent {
+    class KeyboardButtonInputEvent : public KeyboardInputEvent {
         int button_;
         int action_;
 
     public:
-        KeyboardInputEvent(
+        KeyboardButtonInputEvent(
             int button,
             int action
         ): button_(button), action_(action) {}
