@@ -56,6 +56,18 @@ namespace minig {
         }
     };
 
+    class WButtonPressKeyboardEventListener : public KeyboardButtonEventListener {
+        bool trigger_condition(int key, int scancode, int action, int mods) override {
+            return key == GLFW_KEY_W && action == GLFW_PRESS;
+        }
+    };
+
+    class SButtonPressKeyboardEventListener : public KeyboardButtonEventListener {
+        bool trigger_condition(int key, int scancode, int action, int mods) override {
+            return key == GLFW_KEY_S && action == GLFW_PRESS;
+        }
+    };
+
     class KeyboardButtonCallback {
         std::vector<std::unique_ptr<KeyboardButtonEventListener>> event_listeners_;
 
