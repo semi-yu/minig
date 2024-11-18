@@ -23,7 +23,7 @@ namespace minig {
         ): projection_(projection), 
         position_(position), look_at_(look_at), up_(up) {}
 
-        void notice(std::unique_ptr<InputEvent> event) override {
+        void notice_keyboard_event(std::unique_ptr<KeyboardInputEvent> event) override {
             float move_multiplier = 0.5;
             
             shader_program_.use();
