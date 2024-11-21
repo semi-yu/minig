@@ -56,6 +56,30 @@ namespace minig {
             shader_program_.send_rotation_matrix(rotation_);
             shader_program_.send_scalation_matrix(scalation_);
         }
+
+        void translate(glm::vec3&& position) {
+            translation_ = glm::translate(glm::mat4(1.0), position);
+        }
+
+        void rotate(glm::vec3&& axis, GLfloat radian) {
+            rotation_ = glm::rotate(glm::mat4(1.0), radian, axis);
+        }
+
+        void scale(glm::vec3& extend) {
+            scalation_ = glm::scale(glm::mat4(1.0), extend);
+        }
+
+        void accumulate_translate(glm::vec3& position) {
+            translation_ = glm::translate(translation_, position);
+        }
+
+        void accumulate_rotate(glm::vec3& axis, GLfloat radian) {
+            rotation_ = glm::rotate(rotation_, radian, axis);
+        }
+
+        void accumulate_scale(glm::vec3& extend) {
+            scalation_ = glm::scale(scalation_, extend);
+        }
     };
 }
 
