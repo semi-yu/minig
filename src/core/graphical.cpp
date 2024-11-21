@@ -27,6 +27,8 @@ namespace minig {
         ): shader_program_(shader_program) {}
 
         void pre_run() override {
+            glEnable(GL_DEPTH_TEST);
+
             shader_program_.use();
 
             for (auto& drawable: drawables) {
@@ -36,7 +38,7 @@ namespace minig {
 
         void run() override {
             glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-            glClear(GL_COLOR_BUFFER_BIT);
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
             for (auto& drawable: drawables) {
                 draw_preprocess();
