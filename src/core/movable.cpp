@@ -45,8 +45,6 @@ namespace minig {
 
         void notice_mouse_move_event(std::unique_ptr<MouseMoveInputEvent> event) override {
             auto cursor_x = event->position_x(), cursor_y = event->position_y();
-
-            fmt::print("cursor position ({}, {})\n", cursor_x, cursor_y);
         }
 
         void set_uniform_variables() {
