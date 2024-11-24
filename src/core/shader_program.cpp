@@ -21,6 +21,7 @@ namespace minig {
             "layout(location = 0) in vec3 position;\n"
             "layout(location = 1) in vec4 color;\n"
             "layout(location = 2) in vec2 texture_coord;\n"
+            "layout(location = 3) in vec2 normal_coord;\n"
             "uniform float time;\n"
             "uniform mat4 scalation;\n"
             "uniform mat4 rotation;\n"
@@ -30,28 +31,36 @@ namespace minig {
             "uniform mat4 model;\n"
             "out vec4 mid_color;\n"
             "out vec2 mid_texture_coord;\n"
+            "out vec2 mid_normal_coord;\n"
             "void main() {\n"
             "   gl_Position = projection * view * scalation * rotation * translation * vec4(position, 1.0);\n"
             "   mid_color = color;\n"
             "   mid_texture_coord = vec2(texture_coord.x, texture_coord.y);\n"
+            "   mid_normal_coord = normal_coord;\n"
             "}",
 
             "#version 430 core\n"
             "in vec4 mid_color;\n"
             "in vec2 mid_texture_coord;\n"
+            "in vec2 mid_normal_coord;\n"
             "uniform float time;\n"
             "uniform sampler2D texture_sample;\n"
             "uniform uint shape_type;"
+            "float ambient_strength = 0.1;"
             "out vec4 fragment_color;\n"
             "void main() {\n"
-            "   if (shape_type == 0) {\n"
+            "   if (shape_type == 0) {\n" // Colored
             "       fragment_color = mid_color;\n"
             "   }\n"
-            "   else if (shape_type == 1) {\n"
+            "   else if (shape_type == 1) {\n" // Textured
             "       fragment_color = texture(texture_sample, mid_texture_coord);\n"
             "   }\n"
-            "   else if (shape_type == 2) {\n"
-            "       fragment_color = texture(texture_sample, mid_texture_coord) * mid_color;\n"
+            "   else if (shape_type == 2) {\n" // Lighted
+            "       \n"
+            "       fragment_color = texture(texture_sample, mid_texture_coord) * ambient_strength;\n"
+            "   }\n"
+            "   else if (shape_type == 3) {\n" // Lamp
+            "       fragment_color = vec4(1.0);\n"
             "   }\n"
             "}"
         };
