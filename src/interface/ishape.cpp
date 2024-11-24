@@ -43,6 +43,8 @@ namespace minig {
         virtual void configure_attribute() = 0;
 
         GLuint shape_type() { return shape_type_; }
+
+        void set_shape_type(GLuint type) { shape_type_ = type; }
     }; 
 }
 
