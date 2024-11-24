@@ -15,6 +15,7 @@
 
 namespace minig {
     class Movable : public minig::Textured, public minig::IKeyboardEventSubscribable, public minig::IMouseMoveEventSubscribable {
+    protected:
         glm::mat4 translation_, rotation_, scalation_;
         GLfloat rotational_angle_ = 0.0;
 
@@ -47,7 +48,7 @@ namespace minig {
             auto cursor_x = event->position_x(), cursor_y = event->position_y();
         }
 
-        void set_uniform_variables() {
+        virtual void set_uniform_variables() {
             shader_program_.use();
 
             shader_program_.send_translation_matrix(translation_);
